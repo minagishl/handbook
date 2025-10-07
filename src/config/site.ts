@@ -7,4 +7,15 @@ export type HeaderLink = {
   external?: boolean;
 };
 
-export const headerLinks: HeaderLink[] = [];
+export const headerLinks: HeaderLink[] = [
+  {
+    label: "Documentation",
+    href: "/",
+    external: false,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/minagishl/handbook",
+    external: true,
+  },
+];

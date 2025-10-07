@@ -1,7 +1,8 @@
 ---
 import type { NavigationGroup } from "../utils/navigation";
 import ThemeToggle from "./ThemeToggle";
-import { Search, Menu } from "lucide-react";
+import SearchBox from "./SearchBox";
+import { Menu } from "lucide-react";
 
 interface Props {
   navigation: NavigationGroup[];
@@ -30,22 +31,7 @@ const { navigation, currentPath } = Astro.props;
     </div>
     <div class='flex items-center gap-3'>
       <label class='sr-only' for='handbook-search'>Search</label>
-      <div
-        class='hidden items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-500 focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 sm:flex'
-      >
-        <Search className='h-4 w-4' />
-        <input
-          id='handbook-search'
-          type='search'
-          placeholder='Search...'
-          class='w-40 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none dark:text-slate-200 dark:placeholder:text-slate-500'
-        />
-        <kbd
-          class='hidden rounded border border-slate-300 bg-slate-50 px-1.5 py-0.5 text-xs font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 sm:inline'
-        >
-          /
-        </kbd>
-      </div>
+      <SearchBox client:load />
       <ThemeToggle client:only='react' />
       <details class='relative flex lg:hidden'>
         <summary

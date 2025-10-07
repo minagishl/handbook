@@ -20,7 +20,7 @@
   }
 
   a {
-    @apply text-blue-600 underline-offset-2 transition-colors hover:underline;
+    @apply text-blue-600 transition-colors;
   }
 
   nav a {

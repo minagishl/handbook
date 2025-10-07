@@ -56,6 +56,7 @@ The production output lives in `./dist` and can be hosted on any static provider
 - **Tailwind tokens:** extend spacing, radius, or typography in `src/styles/global.css` using CSS variables (e.g., `@theme { ... }`). Tailwind v4 removes the need to maintain a manual color palette—lean on built-in palettes like `slate`, `sky`, and `emerald` for consistent theming.
 - **Layout tweaks:** adjust grid templates, card styling, or utility classes inside `src/styles/global.css`. The stylesheet defines `.docs-grid`, `.docs-sidebar`, `.docs-card`, and `.docs-toc` helpers for quick experimentation.
 - **Navigation logic:** update `src/utils/navigation.ts` if you need custom grouping or filtering rules. Hidden pages can set `sidebar.hidden: true` in frontmatter.
+- **Header links:** configure `src/config/site.ts` to add call-to-action links beside the search box. Provide `label`, `href`, and optional `external: true` to open in a new tab.
 - **Theme presets:** the header theme toggle stores preferences in `localStorage` and respects `prefers-color-scheme`. Add new schemes by extending the toggle script and creating additional `body[data-theme="*"]` selectors.
 
 ## Recommended workflows

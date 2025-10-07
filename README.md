@@ -1,4 +1,4 @@
-# Handbook (Astro + Tailwind CSS v4)
+# Handbook
 
 A GitBook-inspired handbook site powered by [Astro 5](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com). Markdown content drives the navigation, while reusable Astro layouts deliver a polished authoring experience without maintaining a custom color system.
 

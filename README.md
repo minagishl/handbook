@@ -21,23 +21,22 @@ The production output lives in `./dist` and can be hosted on any static provider
 
 ```
 /
-├── public/                     # Static assets served at the root URL
+├── public/                      # Static assets served at the root URL
 ├── src/
-│   ├── components/             # Layout shell pieces (header, sidebar, TOC, theme toggle)
+│   ├── components/              # Layout shell pieces (header, sidebar, TOC, theme toggle)
 │   ├── content/
-│   │   ├── config.ts           # Zod schema for the `docs` collection
-│   │   └── docs/               # Markdown sources grouped by directory
+│   │   ├── config.ts            # Zod schema for the `docs` collection
+│   │   └── docs/                # Markdown sources grouped by directory
 │   ├── layouts/
-│   │   └── DocsLayout.astro    # GitBook-style three-column layout with slots
+│   │   └── DocsLayout.astro     # GitBook-style three-column layout with slots
 │   ├── pages/
-│   │   ├── docs/[...slug].astro# Dynamic renderer for every handbook article
-│   │   └── index.astro         # Redirects to the first available doc, or shows onboarding
+│   │   ├── docs/[...slug].astro # Dynamic renderer for every handbook article
+│   │   └── index.astro          # Redirects to the first available doc, or shows onboarding
 │   ├── styles/
-│   │   └── global.css          # Tailwind directives, typography plugin, custom utilities
+│   │   └── global.css           # Tailwind directives, typography plugin, custom utilities
 │   └── utils/
-│       └── navigation.ts       # Builds grouped sidebar data and next/previous links
-├── astro.config.mjs            # Adds the @tailwindcss/vite plugin to Vite
-├── tailwind.config.ts          # Tailwind v4 content globs, theme extensions, dark mode
+│       └── navigation.ts        # Builds grouped sidebar data and next/previous links
+├── astro.config.mjs             # Adds the @tailwindcss/vite plugin to Vite
 ├── package.json
 └── README.md
 ```
@@ -54,7 +53,7 @@ The production output lives in `./dist` and can be hosted on any static provider
 
 ## Customization guide
 
-- **Tailwind tokens:** extend spacing, radius, or typography in `tailwind.config.ts`. Tailwind v4 removes the need to maintain a manual color palette—lean on built-in palettes like `slate`, `sky`, and `emerald` for consistent theming.
+- **Tailwind tokens:** extend spacing, radius, or typography in `src/styles/global.css` using CSS variables (e.g., `@theme { ... }`). Tailwind v4 removes the need to maintain a manual color palette—lean on built-in palettes like `slate`, `sky`, and `emerald` for consistent theming.
 - **Layout tweaks:** adjust grid templates, card styling, or utility classes inside `src/styles/global.css`. The stylesheet defines `.docs-grid`, `.docs-sidebar`, `.docs-card`, and `.docs-toc` helpers for quick experimentation.
 - **Navigation logic:** update `src/utils/navigation.ts` if you need custom grouping or filtering rules. Hidden pages can set `sidebar.hidden: true` in frontmatter.
 - **Theme presets:** the header theme toggle stores preferences in `localStorage` and respects `prefers-color-scheme`. Add new schemes by extending the toggle script and creating additional `body[data-theme="*"]` selectors.

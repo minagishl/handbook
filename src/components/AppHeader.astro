@@ -51,7 +51,9 @@ const headerLinkClass =
         )
       }
       <label class='sr-only' for='handbook-search'>Search</label>
-      <SearchBox client:load />
+      <div class='ml-2'>
+        <SearchBox client:load />
+      </div>
       <ThemeToggle client:only='react' />
       <details class='relative flex lg:hidden'>
         <summary
@@ -79,7 +81,7 @@ const headerLinkClass =
               </div>
             )
           }
-          <nav class='flex flex-col gap-4 ml-4'>
+          <nav class='flex flex-col gap-4'>
             {
               navigation.map((group) => (
                 <div class='space-y-2'>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 type SearchRecord = {
   slug: string;
@@ -205,7 +205,7 @@ export default function SearchBox() {
       <input
         ref={inputRef}
         id="handbook-search"
-        type="search"
+        type="text"
         placeholder="Search..."
         value={query}
         onChange={(event) => {
@@ -221,6 +221,20 @@ export default function SearchBox() {
         autoComplete="off"
         spellCheck={false}
       />
+      {query && (
+        <button
+          type="button"
+          onClick={() => {
+            setQuery("");
+            setIsOpen(false);
+            inputRef.current?.focus();
+          }}
+          className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors absolute right-8 top-0 bottom-0 my-auto p-2"
+          aria-label="Clear search"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
       <kbd className="hidden rounded border border-slate-300 bg-slate-50 px-1.5 py-0.5 text-xs font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 sm:inline">
         /
       </kbd>
@@ -232,7 +246,7 @@ export default function SearchBox() {
               <li key={result.slug}>
                 <a
                   href={result.slug}
-                  className={`block px-4 py-2 text-sm transition-colors ${
+                  className={`block px-4 py-2 text-sm transition-colors rounded-sm ${
                     index === activeIndex
                       ? "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300"
                       : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"

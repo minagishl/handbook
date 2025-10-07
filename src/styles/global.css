@@ -92,7 +92,7 @@
     @apply block py-1.5 text-sm text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100;
   }
 
-  .docs-toc a[data-active='true'] {
+  .docs-toc a[data-active="true"] {
     @apply font-medium text-blue-600 dark:text-blue-400;
   }
 

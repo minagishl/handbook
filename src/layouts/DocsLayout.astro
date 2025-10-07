@@ -1,0 +1,131 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
+import AppHeader from "../components/AppHeader.astro";
+import SidebarNav from "../components/SidebarNav.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import type { NavigationGroup, NavigationItem } from "../utils/navigation";
+import "../styles/global.css";
+
+interface Props {
+  entry: CollectionEntry<"docs">;
+  navigation: NavigationGroup[];
+  headings: MarkdownHeading[];
+  previous: NavigationItem | null;
+  next: NavigationItem | null;
+}
+
+const { entry, navigation, headings, previous, next } = Astro.props as Props;
+const { title, description } = entry.data;
+const currentPath = `/docs/${entry.slug}`;
+---
+
+<!doctype html>
+<html lang='en' data-theme='light' data-page={currentPath}>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <title>{title} - Handbook</title>
+    {description && <meta name='description' content={description} />}
+    <script is:inline>
+      (function () {
+        const storageKey = "handbook-theme";
+        try {
+          const stored = window.localStorage.getItem(storageKey);
+          const theme = stored || "light";
+          const root = document.documentElement;
+          root.dataset.theme = theme;
+          root.style.colorScheme = theme;
+          if (theme === "dark") {
+            root.classList.add("dark");
+          } else {
+            root.classList.remove("dark");
+          }
+        } catch (error) {
+          console.warn("Theme preflight failed", error);
+        }
+      })();
+    </script>
+  </head>
+  <body class='min-h-screen text-slate-900 dark:text-slate-100'>
+    <div class='flex min-h-screen flex-col'>
+      <AppHeader navigation={navigation} currentPath={currentPath} />
+      <div class='docs-shell'>
+        <div class='docs-grid'>
+          <aside class='docs-sidebar'>
+            <SidebarNav navigation={navigation} currentPath={currentPath} />
+          </aside>
+          <main class='docs-card min-w-0'>
+            <header class='mb-8 space-y-3'>
+              <slot name='hero'>
+                <div>
+                  <h1 class='text-4xl font-semibold text-slate-900 dark:text-white'>
+                    {title}
+                  </h1>
+                  {
+                    description && (
+                      <p class='mt-4 text-lg text-slate-600 dark:text-slate-400'>{description}</p>
+                    )
+                  }
+                </div>
+              </slot>
+            </header>
+            <article
+              class='prose prose-slate max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-semibold prose-a:font-normal'
+            >
+              <slot />
+            </article>
+            <footer
+              class='mt-12 flex items-center justify-between gap-4 border-t border-slate-200 pt-8 text-sm dark:border-slate-800'
+            >
+              {
+                previous ? (
+                  <a
+                    href={previous.slug}
+                    class='group flex flex-col gap-1 text-left transition-colors hover:text-blue-600 dark:hover:text-blue-400'
+                  >
+                    <span class='text-xs font-medium text-slate-500 dark:text-slate-400'>
+                      Previous
+                    </span>
+                    <span class='font-medium text-slate-900 dark:text-slate-100'>
+                      {previous.title}
+                    </span>
+                  </a>
+                ) : (
+                  <span>&nbsp;</span>
+                )
+              }
+              {
+                next ? (
+                  <a
+                    href={next.slug}
+                    class='group flex flex-col gap-1 text-right transition-colors hover:text-blue-600 dark:hover:text-blue-400'
+                  >
+                    <span class='text-xs font-medium text-slate-500 dark:text-slate-400'>Next</span>
+                    <span class='font-medium text-slate-900 dark:text-slate-100'>{next.title}</span>
+                  </a>
+                ) : (
+                  <span>&nbsp;</span>
+                )
+              }
+            </footer>
+          </main>
+          <aside class='docs-toc'>
+            <TableOfContents headings={headings} />
+          </aside>
+        </div>
+      </div>
+    </div>
+    <script is:inline>
+      const search = document.getElementById("handbook-search");
+      if (search) {
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "/" && !event.defaultPrevented) {
+            event.preventDefault();
+            search.focus();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

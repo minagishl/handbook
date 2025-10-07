@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+
+const docs = await getCollection("docs");
+
+if (docs.length > 0) {
+  const sorted = [...docs].sort((a, b) => {
+    const orderDiff = (a.data.order ?? 0) - (b.data.order ?? 0);
+    return orderDiff !== 0 ? orderDiff : a.data.title.localeCompare(b.data.title);
+  });
+  const first = sorted[0];
+  return Astro.redirect(`/docs/${first.slug}`);
+}
+---
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width' />
+    <title>Handbook</title>
+  </head>
+  <body
+    class='flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100'
+  >
+    <main class='space-y-4 text-center'>
+      <h1 class='text-3xl font-semibold'>Your handbook is ready</h1>
+      <p class='max-w-md text-sm text-slate-600 dark:text-slate-300'>
+        Add Markdown articles inside <code>src/content/docs</code> and include frontmatter with a
+        <code>title</code>, <code>group</code>, and <code>order</code> to populate the navigation.
+      </p>
+      <a
+        href='https://docs.astro.build/en/guides/content-collections/'
+        class='inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200'
+      >
+        Learn about content collections
+      </a>
+    </main>
+  </body>
+</html>

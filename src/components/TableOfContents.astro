@@ -1,0 +1,39 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const items = headings
+  .filter((heading) => heading.depth > 1 && heading.depth < 4)
+  .map((heading) => ({
+    ...heading,
+    indent: heading.depth === 3 ? "ps-4" : "ps-0",
+  }));
+---
+
+{
+  items.length > 0 && (
+    <nav aria-label='Table of contents' class='docs-toc'>
+      <div class='docs-toc-panel'>
+        <h2 class='mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400'>
+          On this page
+        </h2>
+        <ul class='space-y-2'>
+          {items.map((item) => (
+            <li class={item.indent}>
+              <a
+                href={`#${item.slug}`}
+                class='block transition-colors hover:text-slate-900 dark:hover:text-slate-100'
+              >
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}
